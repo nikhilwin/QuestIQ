@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Production builds
+dist/
+client/dist/
+
+# Local env configs & caches
+.env
+server/.env
+.eslintcache
+.DS_Store
+
+# Local Database fallback caches
+data_fallback.json
+server/data_fallback.json
+server/uploads/*
+!server/uploads/.gitkeep
