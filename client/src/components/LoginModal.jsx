@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { X, Lock, Mail, User, AlertCircle, ArrowRight } from 'lucide-react';
 
-export default function LoginModal({ isOpen, onClose, onAuthSuccess }) {
+export default function LoginModal({ isOpen, onClose, onAuthSuccess, hideClose }) {
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -33,19 +33,21 @@ export default function LoginModal({ isOpen, onClose, onAuthSuccess }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/75 backdrop-blur-md px-4">
+    <div className={hideClose ? "w-full flex items-center justify-center" : "fixed inset-0 z-50 flex items-center justify-center bg-slate-950/75 backdrop-blur-md px-4"}>
       {/* Modal Card */}
       <div className="relative w-full max-w-md glass-panel p-8 rounded-3xl border-slate-800 shadow-2xl relative overflow-hidden animate-soft-glow">
         <div className="absolute -left-16 -top-16 w-36 h-36 bg-violet-600/10 rounded-full blur-2xl"></div>
         <div className="absolute -right-16 -bottom-16 w-36 h-36 bg-cyan-600/10 rounded-full blur-2xl"></div>
 
         {/* Close Button */}
-        <button 
-          onClick={onClose}
-          className="absolute right-4 top-4 p-2 text-slate-500 hover:text-white hover:bg-slate-900/60 rounded-xl transition-all cursor-pointer"
-        >
-          <X className="w-5 h-5" />
-        </button>
+        {!hideClose && (
+          <button 
+            onClick={onClose}
+            className="absolute right-4 top-4 p-2 text-slate-500 hover:text-white hover:bg-slate-900/60 rounded-xl transition-all cursor-pointer"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
 
         {/* Header */}
         <div className="text-center space-y-2 mb-6">

@@ -85,6 +85,34 @@ export default function App() {
     { id: 'community', label: 'Discussion Board', icon: <MessageSquare className="w-5 h-5" /> }
   ];
 
+  if (!currentUser) {
+    return (
+      <div className="flex h-screen w-screen bg-[#090d16] text-[#f1f5f9] items-center justify-center p-4 relative overflow-hidden">
+        {/* Ambient background details */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        
+        {/* Brand logo */}
+        <div className="absolute top-8 left-8 flex items-center space-x-3">
+          <div className="p-2 bg-gradient-to-tr from-violet-600 to-cyan-500 rounded-xl shadow-lg">
+            <Brain className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <span className="font-extrabold text-lg tracking-wider text-white">Quest<span className="text-violet-400">IQ</span></span>
+            <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">PYQ AI Engine</p>
+          </div>
+        </div>
+
+        <LoginModal 
+          isOpen={true}
+          onClose={() => {}}
+          onAuthSuccess={handleAuthSuccess}
+          hideClose={true}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="flex h-screen bg-[#090d16] text-[#f1f5f9] overflow-hidden">
       {/* Sidebar Navigation - Desktop */}
