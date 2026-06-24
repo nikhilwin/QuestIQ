@@ -26,7 +26,7 @@ export default function AiAssistant({ preloadedTopic, selectedExam, selectedSubj
       // Proactively prompt user action in chat
       setChatHistory(prev => [
         ...prev,
-        { sender: 'tutor', text: `I see you selected **"${preloadedTopic}"** from the Intelligence Engine. Select one of the quick actions below to begin studying this topic.` }
+        { sender: 'tutor', text: `I see you selected **"${preloadedTopic}"** as your study focus. Select one of the quick actions below to begin studying.` }
       ]);
     }
   }, [preloadedTopic]);

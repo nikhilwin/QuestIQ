@@ -3,7 +3,7 @@ import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Legend } from 'recharts';
 import { TrendingUp, BarChart2, PieChart as PieIcon, Info } from 'lucide-react';
 
-export default function TopicsAnalyzer({ selectedExam, selectedSubject }) {
+export default function TopicsAnalyzer({ selectedExam, selectedSubject, preloadedTopic }) {
   const [pyqs, setPyqs] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -113,6 +113,18 @@ export default function TopicsAnalyzer({ selectedExam, selectedSubject }) {
 
   return (
     <div className="space-y-8">
+      {/* Focus Topic Indicator */}
+      {preloadedTopic && (
+        <div className="p-4 bg-violet-600/10 border border-violet-500/20 rounded-xl flex items-center justify-between text-sm animate-soft-glow">
+          <span className="text-slate-300">
+            Analyzing trends for: <strong className="text-violet-300">{preloadedTopic}</strong>
+          </span>
+          <span className="text-xs text-violet-400 font-semibold uppercase tracking-wider">
+            Active Focus
+          </span>
+        </div>
+      )}
+
       {/* Overview Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="glass-panel p-6 rounded-2xl">
@@ -167,12 +179,22 @@ export default function TopicsAnalyzer({ selectedExam, selectedSubject }) {
                   contentStyle={{ backgroundColor: '#0f172a', borderColor: 'rgba(255,255,255,0.1)' }}
                   labelStyle={{ color: '#fff', fontWeight: 'bold' }}
                 />
-                <Bar dataKey="count" fill="url(#violetGradient)" radius={[0, 4, 4, 0]}>
-                  {barData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={index === 0 ? 'url(#violetGradient)' : 'url(#cyanGradient)'} />
-                  ))}
+                <Bar dataKey="count" fill="url(#violetGradient)" radius={[0, 4, 4, 0]} filter="url(#glow)">
+                  {barData.map((entry, index) => {
+                    const isFocus = preloadedTopic && entry.name.toLowerCase().includes(preloadedTopic.toLowerCase());
+                    return (
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={isFocus ? 'url(#goldGradient)' : (index === 0 ? 'url(#violetGradient)' : 'url(#cyanGradient)')} 
+                      />
+                    );
+                  })}
                 </Bar>
                 <defs>
+                  <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="2.5" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                  </filter>
                   <linearGradient id="violetGradient" x1="0" y1="0" x2="1" y2="0">
                     <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.4} />
                     <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0.9} />
@@ -180,6 +202,10 @@ export default function TopicsAnalyzer({ selectedExam, selectedSubject }) {
                   <linearGradient id="cyanGradient" x1="0" y1="0" x2="1" y2="0">
                     <stop offset="0%" stopColor="#06b6d4" stopOpacity={0.4} />
                     <stop offset="100%" stopColor="#06b6d4" stopOpacity={0.9} />
+                  </linearGradient>
+                  <linearGradient id="goldGradient" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#eab308" stopOpacity={0.5} />
+                    <stop offset="100%" stopColor="#eab308" stopOpacity={0.9} />
                   </linearGradient>
                 </defs>
               </BarChart>
@@ -241,6 +267,12 @@ export default function TopicsAnalyzer({ selectedExam, selectedSubject }) {
                 data={lineData}
                 margin={{ top: 20, right: 30, left: -20, bottom: 5 }}
               >
+                <defs>
+                  <filter id="glow-line" x="-10%" y="-10%" width="120%" height="120%">
+                    <feGaussianBlur stdDeviation="3" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                  </filter>
+                </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
                 <XAxis dataKey="year" stroke="#64748b" />
                 <YAxis stroke="#64748b" />
@@ -258,6 +290,7 @@ export default function TopicsAnalyzer({ selectedExam, selectedSubject }) {
                         stroke={colors[i % colors.length]}
                         strokeWidth={3}
                         activeDot={{ r: 8 }}
+                        filter="url(#glow-line)"
                       />
                     );
                   })}

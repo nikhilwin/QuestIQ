@@ -18,6 +18,11 @@ export default function PyqRepository({ selectedExam, selectedSubject, currentUs
       setFilterTopic(preloadedTopic);
     }
   }, [preloadedTopic]);
+
+  useEffect(() => {
+    setFilterExam(selectedExam ? selectedExam.name : '');
+    setFilterSubject(selectedSubject ? selectedSubject.name : '');
+  }, [selectedExam, selectedSubject]);
   
   // Bookmark state
   const [showBookmarksOnly, setShowBookmarksOnly] = useState(false);
@@ -363,6 +368,9 @@ export default function PyqRepository({ selectedExam, selectedSubject, currentUs
             className="bg-slate-950/60 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none cursor-pointer"
           >
             <option value="">All Chapters</option>
+            {filterTopic && !uniqueTopics.includes(filterTopic) && (
+              <option value={filterTopic}>{filterTopic}</option>
+            )}
             {uniqueTopics.map(t => (
               <option key={t} value={t}>{t}</option>
             ))}
@@ -382,7 +390,7 @@ export default function PyqRepository({ selectedExam, selectedSubject, currentUs
           <p className="text-sm text-slate-500 mt-1 max-w-sm mx-auto">
             {showBookmarksOnly 
               ? "You haven't saved any questions yet! Star a question card to save it."
-              : "No matching questions for the chosen filter combination. Try clearing your filters or contribute a question!"}
+              : `No questions found for ${filterExam || 'this exam'} - ${filterSubject || 'this subject'}${filterTopic ? ` (${filterTopic})` : ''}. Try clearing your filters or contribute a question!`}
           </p>
         </div>
       ) : (

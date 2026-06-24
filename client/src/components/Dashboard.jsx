@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BookOpen, GraduationCap, ChevronRight, Award, Compass, ArrowRight, Video, Brain, Search, BarChart2, Calendar, X, Sparkles } from 'lucide-react';
 
-export default function Dashboard({ onSelectExam, onSelectSubject, selectedExam, selectedSubject, onSendToAiAssistant, onNavigate }) {
+export default function Dashboard({ onSelectExam, onSelectSubject, selectedExam, selectedSubject, onSendToAiAssistant, onSelectTopic, onNavigate }) {
   const [exams, setExams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -59,18 +59,18 @@ export default function Dashboard({ onSelectExam, onSelectSubject, selectedExam,
   return (
     <div className="space-y-8">
       {/* Welcome Banner */}
-      <div className="relative glass-panel p-8 rounded-3xl overflow-hidden gradient-bg-violet gradient-glow-violet">
-        <div className="absolute right-0 top-0 w-80 h-80 bg-violet-600/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute left-1/3 bottom-0 w-64 h-64 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="relative glass-panel p-8 rounded-3xl overflow-hidden gradient-bg-violet gradient-glow-violet animate-mesh-drift">
+        <div className="absolute -right-10 -top-10 w-96 h-96 bg-violet-600/15 rounded-full blur-3xl pointer-events-none animate-soft-glow"></div>
+        <div className="absolute left-1/4 -bottom-20 w-80 h-80 bg-cyan-600/15 rounded-full blur-3xl pointer-events-none animate-soft-glow [animation-delay:1.5s]"></div>
         
         <div className="relative z-10 space-y-3 max-w-2xl">
-          <span className="px-3 py-1 bg-violet-500/20 text-violet-300 border border-violet-500/30 rounded-full text-xs font-semibold uppercase tracking-wider">
+          <span className="px-3 py-1 bg-violet-500/20 text-violet-300 border border-violet-500/30 rounded-full text-xs font-semibold uppercase tracking-wider backdrop-blur-md">
             QuestIQ Portal
           </span>
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
             Accelerate Your Prep with <span className="gradient-text">PYQ Intelligence</span>
           </h1>
-          <p className="text-slate-300 text-base md:text-lg">
+          <p className="text-slate-300 text-base md:text-lg leading-relaxed">
             Choose your target exam, browse subjects, and let AI analyze historical patterns to pinpoint exactly what you need to study.
           </p>
         </div>
@@ -88,7 +88,7 @@ export default function Dashboard({ onSelectExam, onSelectSubject, selectedExam,
               <div 
                 key={exam._id || exam.name}
                 onClick={() => onSelectExam(exam)}
-                className="group glass-panel glass-panel-hover p-6 rounded-2xl cursor-pointer relative overflow-hidden"
+                className="group glass-panel neon-glow-card p-6 rounded-2xl cursor-pointer relative overflow-hidden"
               >
                 <div className="flex items-start justify-between">
                   <div className="p-3 bg-slate-900/60 rounded-xl border border-slate-700/30 group-hover:border-violet-500/30 transition-colors">
@@ -171,7 +171,7 @@ export default function Dashboard({ onSelectExam, onSelectSubject, selectedExam,
                       <button 
                         key={topic}
                         onClick={() => setSelectedTopic(topic)}
-                        className="w-full flex items-center justify-between p-4 bg-slate-900/40 border border-slate-800/80 rounded-xl hover:border-violet-500/40 hover:bg-violet-950/5 transition-all text-left cursor-pointer group"
+                        className="w-full flex items-center justify-between p-4 bg-slate-900/40 border border-slate-800/80 rounded-xl hover:border-violet-500/40 hover:bg-violet-950/5 transition-all text-left cursor-pointer group neon-glow-card"
                       >
                         <div className="flex items-center space-x-3">
                           <span className="flex items-center justify-center w-6 h-6 rounded-full bg-slate-800 text-xs font-semibold text-slate-400 group-hover:bg-violet-600/20 group-hover:text-violet-300 transition-colors">
@@ -268,7 +268,8 @@ export default function Dashboard({ onSelectExam, onSelectSubject, selectedExam,
               {/* Option 1: AI Explanation */}
               <button
                 onClick={() => {
-                  onSendToAiAssistant(selectedTopic);
+                  onSelectTopic(selectedTopic);
+                  onNavigate('ai-tutor');
                   setSelectedTopic(null);
                 }}
                 className="flex flex-col p-4 bg-violet-950/10 border border-violet-500/25 hover:border-violet-500 hover:bg-violet-950/20 text-left rounded-2xl group transition-all duration-300 cursor-pointer shadow-md shadow-violet-950/10"
@@ -281,7 +282,7 @@ export default function Dashboard({ onSelectExam, onSelectSubject, selectedExam,
               {/* Option 2: Solve PYQs */}
               <button
                 onClick={() => {
-                  onSendToAiAssistant(selectedTopic); // Pre-sets the topic
+                  onSelectTopic(selectedTopic);
                   onNavigate('pyq-hub');
                   setSelectedTopic(null);
                 }}
@@ -295,6 +296,7 @@ export default function Dashboard({ onSelectExam, onSelectSubject, selectedExam,
               {/* Option 3: Weightage Analysis */}
               <button
                 onClick={() => {
+                  onSelectTopic(selectedTopic);
                   onNavigate('analyzer');
                   setSelectedTopic(null);
                 }}
@@ -308,6 +310,7 @@ export default function Dashboard({ onSelectExam, onSelectSubject, selectedExam,
               {/* Option 4: Smart Planner */}
               <button
                 onClick={() => {
+                  onSelectTopic(selectedTopic);
                   onNavigate('revision');
                   setSelectedTopic(null);
                 }}

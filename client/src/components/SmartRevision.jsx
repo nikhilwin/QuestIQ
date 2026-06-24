@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, Target, CheckCircle2, ChevronDown, ChevronUp, Clock, BookOpen } from 'lucide-react';
 
-export default function SmartRevision({ selectedSubject }) {
+export default function SmartRevision({ selectedSubject, preloadedTopic, completedTasks = {}, setCompletedTasks }) {
   // Pre-configured 7-Day Plans based on selected subject type
   const defaultPlan = [
     { day: "Day 1", task: "Review Core Concepts & Definitions", detail: "Read through main summaries, highlight edge exceptions, and memorize basic terms." },
@@ -40,8 +40,8 @@ export default function SmartRevision({ selectedSubject }) {
       ? polityPlan
       : defaultPlan;
 
-  // Track checked revision tasks
-  const [completedTasks, setCompletedTasks] = useState({}); // { index: boolean }
+  // Track active particles for checkmark celebration
+  const [activeParticles, setActiveParticles] = useState([]);
   
   // Track open accordions
   const [openQuestion, setOpenQuestion] = useState(null);
@@ -79,8 +79,43 @@ export default function SmartRevision({ selectedSubject }) {
     ? sampleExpectedQuestions.filter(q => q.subject.toLowerCase() === selectedSubject.name.toLowerCase())
     : sampleExpectedQuestions;
 
-  const toggleTask = (idx) => {
-    setCompletedTasks(prev => ({ ...prev, [idx]: !prev[idx] }));
+  const toggleTask = (idx, e) => {
+    const isNowCompleted = !completedTasks[idx];
+    if (setCompletedTasks) {
+      setCompletedTasks(prev => ({ ...prev, [idx]: isNowCompleted }));
+    }
+    
+    // Trigger particle explosion if checked
+    if (isNowCompleted && e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const parentRect = e.currentTarget.offsetParent?.getBoundingClientRect() || { left: 0, top: 0 };
+      const clickX = rect.left - parentRect.left + rect.width / 2;
+      const clickY = rect.top - parentRect.top + rect.height / 2;
+      
+      const newParticles = Array.from({ length: 12 }).map((_, pIdx) => {
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 30 + Math.random() * 40;
+        const targetX = Math.cos(angle) * distance;
+        const targetY = Math.sin(angle) * distance;
+        const colors = ['#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#ec4899'];
+        
+        return {
+          id: `${Date.now()}-${pIdx}-${Math.random()}`,
+          x: clickX,
+          y: clickY,
+          targetX: `${targetX}px`,
+          targetY: `${targetY}px`,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        };
+      });
+      
+      setActiveParticles(prev => [...prev, ...newParticles]);
+      
+      // Clean up particles
+      setTimeout(() => {
+        setActiveParticles(prev => prev.filter(p => !newParticles.find(np => np.id === p.id)));
+      }, 800);
+    }
   };
 
   const totalTasks = currentPlan.length;
@@ -98,6 +133,12 @@ export default function SmartRevision({ selectedSubject }) {
               <h2 className="text-lg font-bold text-white">Last 7 Days Revision Plan</h2>
               <p className="text-xs text-slate-400">
                 Subject Focus: <span className="text-violet-400 font-semibold">{selectedSubject?.name || 'General Syllabus'}</span>
+                {preloadedTopic && (
+                  <>
+                    {' • Topic Focus: '}
+                    <span className="text-indigo-400 font-semibold">{preloadedTopic}</span>
+                  </>
+                )}
               </p>
             </div>
           </div>
@@ -121,15 +162,30 @@ export default function SmartRevision({ selectedSubject }) {
             return (
               <div 
                 key={idx}
-                className={`flex items-start space-x-4 p-4 rounded-2xl border transition-all duration-200 ${
+                className={`relative flex items-start space-x-4 p-4 rounded-2xl border transition-all duration-200 ${
                   isCompleted 
                     ? 'bg-emerald-500/5 border-emerald-500/20 text-slate-400' 
                     : 'bg-slate-900/40 border-slate-800/80 hover:border-slate-700/60'
                 }`}
               >
+                {/* Active Particles Explosion */}
+                {activeParticles.map(p => (
+                  <span
+                    key={p.id}
+                    className="absolute w-1.5 h-1.5 rounded-full pointer-events-none animate-particle z-50"
+                    style={{
+                      left: p.x,
+                      top: p.y,
+                      backgroundColor: p.color,
+                      '--x': p.targetX,
+                      '--y': p.targetY
+                    }}
+                  />
+                ))}
+
                 {/* Custom Checkbox */}
                 <button 
-                  onClick={() => toggleTask(idx)}
+                  onClick={(e) => toggleTask(idx, e)}
                   className={`mt-1 flex items-center justify-center w-5 h-5 rounded border transition-all cursor-pointer ${
                     isCompleted 
                       ? 'bg-emerald-500 border-emerald-500 text-white' 

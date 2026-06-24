@@ -37,6 +37,9 @@ export default function App() {
   // Cross-component AI focus passing
   const [aiFocusTopic, setAiFocusTopic] = useState('');
 
+  // Shared revision checklist progress
+  const [completedRevisionTasks, setCompletedRevisionTasks] = useState({});
+
   // Notifications drawer state
   const [showNotifications, setShowNotifications] = useState(false);
 
@@ -57,16 +60,22 @@ export default function App() {
     localStorage.removeItem('questiq_user');
     setSelectedExam(null);
     setSelectedSubject(null);
+    setAiFocusTopic('');
+    setCompletedRevisionTasks({});
     setActiveTab('dashboard');
   };
 
   const handleSelectExam = (exam) => {
     setSelectedExam(exam);
     setSelectedSubject(null); // Reset subject on exam change
+    setAiFocusTopic('');      // Reset topic
+    setCompletedRevisionTasks({}); // Reset checklist progress
   };
 
   const handleSelectSubject = (subject) => {
     setSelectedSubject(subject);
+    setAiFocusTopic('');      // Reset topic when switching subjects
+    setCompletedRevisionTasks({}); // Reset checklist progress
     setActiveTab('dashboard'); // keep on dashboard to view chapters
   };
 
@@ -149,6 +158,43 @@ export default function App() {
             );
           })}
         </nav>
+
+        {/* Daily Prep Target Progress */}
+        {selectedSubject && (() => {
+          const completedCount = Object.values(completedRevisionTasks).filter(Boolean).length;
+          const progressPercent = Math.round((completedCount / 7) * 100);
+          return (
+            <div className="mx-4 mb-4 p-4 glass-panel rounded-2xl border-slate-800/80 space-y-3 relative overflow-hidden animate-soft-glow">
+              <div className="absolute -right-4 -top-4 w-12 h-12 bg-violet-500/10 rounded-full blur-xl"></div>
+              <div className="flex items-center space-x-3">
+                <div className="relative w-10 h-10 flex items-center justify-center shrink-0">
+                  {/* SVG Progress Ring */}
+                  <svg className="w-full h-full transform -rotate-90">
+                    <circle
+                      cx="20"
+                      cy="20"
+                      r="16"
+                      className="stroke-slate-800 stroke-[3] fill-none"
+                    />
+                    <circle
+                      cx="20"
+                      cy="20"
+                      r="16"
+                      className="stroke-violet-500 stroke-[3] fill-none transition-all duration-500"
+                      strokeDasharray={`${2 * Math.PI * 16}`}
+                      strokeDashoffset={`${2 * Math.PI * 16 * (1 - progressPercent / 100)}`}
+                    />
+                  </svg>
+                  <span className="absolute text-[9px] font-extrabold text-violet-300">{progressPercent}%</span>
+                </div>
+                <div className="overflow-hidden">
+                  <p className="text-[10px] font-extrabold text-slate-200">Daily Study Target</p>
+                  <p className="text-[9px] text-slate-500 font-semibold uppercase tracking-wider truncate">{selectedSubject.name}</p>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Sidebar Footer User Card */}
         <div className="p-4 border-t border-slate-800/80 bg-[#0a0e1a]/80">
@@ -252,10 +298,19 @@ export default function App() {
                       </span>
                     </>
                   )}
+                  {aiFocusTopic && (
+                    <>
+                      <span className="text-slate-600">/</span>
+                      <span className="px-2 py-0.5 bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 rounded font-semibold">
+                        {aiFocusTopic}
+                      </span>
+                    </>
+                  )}
                   <button 
                     onClick={() => {
                       setSelectedExam(null);
                       setSelectedSubject(null);
+                      setAiFocusTopic('');
                       setActiveTab('dashboard');
                     }}
                     className="text-[10px] text-slate-500 hover:text-red-400 hover:underline pl-1"
@@ -266,6 +321,22 @@ export default function App() {
               ) : (
                 <span className="text-slate-400 italic">No exam selected (browse Dashboard)</span>
               )}
+            </div>
+
+            {/* AI Tip of the Day Ticker */}
+            <div className="hidden xl:flex items-center space-x-2 bg-slate-950/40 border border-slate-900 px-3 py-1 rounded-full text-[10px] text-slate-450 max-w-xs md:max-w-md overflow-hidden relative group">
+              <span className="font-extrabold text-[9px] text-violet-400 uppercase tracking-widest bg-violet-500/10 px-2 py-0.5 rounded-full shrink-0 border border-violet-500/20">
+                AI Prep Tip
+              </span>
+              <div className="inline-block whitespace-nowrap animate-marquee">
+                <span className="font-medium">
+                  {selectedSubject?.name === 'Polity' 
+                    ? "Study Article 32 & landmark writ cases. History: focus on timelines of Indian National Movement."
+                    : selectedSubject?.name === 'Physics'
+                      ? "Derive rotation rolling constraints; Mechanics marks yield highest exam returns."
+                      : "Consistency beats intensity. Practice 5 PYQs daily to align with actual paper patterns."}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -330,59 +401,66 @@ export default function App() {
 
         {/* View Workspace Portal Content */}
         <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6">
-          {activeTab === 'dashboard' && (
-            <Dashboard 
-              onSelectExam={handleSelectExam}
-              onSelectSubject={handleSelectSubject}
-              selectedExam={selectedExam}
-              selectedSubject={selectedSubject}
-              onSendToAiAssistant={handleSendToAiAssistant}
-              onNavigate={setActiveTab}
-            />
-          )}
+          <div key={activeTab} className="animate-page-slide-up space-y-6">
+            {activeTab === 'dashboard' && (
+              <Dashboard 
+                onSelectExam={handleSelectExam}
+                onSelectSubject={handleSelectSubject}
+                selectedExam={selectedExam}
+                selectedSubject={selectedSubject}
+                onSendToAiAssistant={handleSendToAiAssistant}
+                onSelectTopic={setAiFocusTopic}
+                onNavigate={setActiveTab}
+              />
+            )}
 
-          {activeTab === 'pyq-hub' && (
-            <PyqRepository 
-              selectedExam={selectedExam}
-              selectedSubject={selectedSubject}
-              currentUser={currentUser}
-              onLoginRequired={() => setIsLoginOpen(true)}
-              preloadedTopic={aiFocusTopic}
-            />
-          )}
+            {activeTab === 'pyq-hub' && (
+              <PyqRepository 
+                selectedExam={selectedExam}
+                selectedSubject={selectedSubject}
+                currentUser={currentUser}
+                onLoginRequired={() => setIsLoginOpen(true)}
+                preloadedTopic={aiFocusTopic}
+              />
+            )}
 
-          {activeTab === 'analyzer' && (
-            <TopicsAnalyzer 
-              selectedExam={selectedExam}
-              selectedSubject={selectedSubject}
-            />
-          )}
+            {activeTab === 'analyzer' && (
+              <TopicsAnalyzer 
+                selectedExam={selectedExam}
+                selectedSubject={selectedSubject}
+                preloadedTopic={aiFocusTopic}
+              />
+            )}
 
-          {activeTab === 'intelligence' && (
-            <IntelligenceEngine 
-              selectedExam={selectedExam}
-              selectedSubject={selectedSubject}
-              onSendToAiAssistant={handleSendToAiAssistant}
-            />
-          )}
+            {activeTab === 'intelligence' && (
+              <IntelligenceEngine 
+                selectedExam={selectedExam}
+                selectedSubject={selectedSubject}
+                onSendToAiAssistant={handleSendToAiAssistant}
+              />
+            )}
 
-          {activeTab === 'ai-tutor' && (
-            <AiAssistant 
-              preloadedTopic={aiFocusTopic}
-              selectedExam={selectedExam}
-              selectedSubject={selectedSubject}
-            />
-          )}
+            {activeTab === 'ai-tutor' && (
+              <AiAssistant 
+                preloadedTopic={aiFocusTopic}
+                selectedExam={selectedExam}
+                selectedSubject={selectedSubject}
+              />
+            )}
 
-          {activeTab === 'revision' && (
-            <SmartRevision 
-              selectedSubject={selectedSubject}
-            />
-          )}
+            {activeTab === 'revision' && (
+              <SmartRevision 
+                selectedSubject={selectedSubject}
+                preloadedTopic={aiFocusTopic}
+                completedTasks={completedRevisionTasks}
+                setCompletedTasks={setCompletedRevisionTasks}
+              />
+            )}
 
-          {activeTab === 'community' && (
-            <Community />
-          )}
+            {activeTab === 'community' && (
+              <Community />
+            )}
+          </div>
         </div>
       </main>
 

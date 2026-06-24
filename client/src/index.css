@@ -89,3 +89,90 @@ html, body, #root {
 .animate-soft-glow {
   animation: soft-glow 3s infinite ease-in-out;
 }
+
+/* Shifting mesh background animation */
+@keyframes mesh-drift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+.animate-mesh-drift {
+  background-size: 200% 200%;
+  animation: mesh-drift 15s infinite ease-in-out;
+}
+
+/* Neon border glow styling on hover */
+.neon-glow-card {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+.neon-glow-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  transition: background 0.4s ease;
+  z-index: 10;
+}
+.neon-glow-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(139, 92, 246, 0.3) !important;
+  box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.25), 
+              0 0 15px -3px rgba(139, 92, 246, 0.15);
+}
+.neon-glow-card:hover::after {
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4) !important;
+}
+
+/* Page transition slide up and fade */
+@keyframes page-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-page-slide-up {
+  animation: page-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Particle explosion animation for checklist */
+@keyframes particle-explode {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y)) scale(0);
+    opacity: 0;
+  }
+}
+.animate-particle {
+  animation: particle-explode 0.8s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+/* Horizontal marquee ticker scrolling */
+@keyframes marquee {
+  0% { transform: translateX(10%); }
+  100% { transform: translateX(-90%); }
+}
+.animate-marquee {
+  display: inline-block;
+  padding-left: 20px;
+  animation: marquee 25s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
