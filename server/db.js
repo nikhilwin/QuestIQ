@@ -18,7 +18,7 @@ let fallbackData = {
           name: "History", 
           syllabus: ["Ancient India", "Medieval India", "Modern Indian History", "Indian National Movement", "World History"],
           ytLectures: [
-            { title: "Modern Indian History Complete", channel: "Harshit Dwivedi Education", url: "https://www.youtube.com/playlist?list=PLwypH_tN26kfC91nN4l_p_l2PZlW5kM-m" },
+            { title: "Modern Indian History Complete", channel: "Harshit Dwivedi Education", url: "https://www.youtube.com/playlist?list=PL_K2YMR-A5WL9r800TcZBNnohv--U7Se0" },
             { title: "Ancient & Medieval History", channel: "Sudarshan Gurjar", url: "https://www.youtube.com/results?search_query=sudarshan+gurjar+ancient+history+upsc" }
           ]
         },
@@ -26,22 +26,22 @@ let fallbackData = {
           name: "Polity", 
           syllabus: ["Indian Constitution", "Fundamental Rights", "Parliament and State Legislatures", "Judiciary", "Local Government"],
           ytLectures: [
-            { title: "Indian Polity by M. Laxmikanth", channel: "Sidharth Arora", url: "https://www.youtube.com/playlist?list=PL3vOUzG_54Ff3K8L5uR5ZuhxM1Zk3nZ9a" },
-            { title: "Polity Revision Lectures", channel: "StudyIQ IAS", url: "https://www.youtube.com/results?search_query=polity+laxmikanth+studyiq" }
+            { title: "Indian Polity by M. Laxmikanth", channel: "Sidharth Arora", url: "https://www.youtube.com/playlist?list=PLSVABdpsEeglEhWvIjwmRfMasHc0PiiFn" },
+            { title: "Polity Revision Lectures", channel: "StudyIQ IAS", url: "https://www.youtube.com/results?search_query=polity+laxmikanth+studyiq+playlist" }
           ]
         },
         { 
           name: "Geography", 
           syllabus: ["Physical Geography", "Indian Geography", "Economic Geography", "Climatology", "Oceanography"],
           ytLectures: [
-            { title: "Indian & Physical Geography Complete", channel: "Amit Sengupta", url: "https://www.youtube.com/playlist?list=PL20E5FDE4987BEA6B" }
+            { title: "Indian & Physical Geography Lectures", channel: "Amit Sengupta", url: "https://www.youtube.com/results?search_query=Amit+Sengupta+Geography+playlist" }
           ]
         },
         { 
           name: "Economy", 
           syllabus: ["National Income", "Inflation", "Banking and Monetary Policy", "Fiscal Policy & Budget", "International Trade"],
           ytLectures: [
-            { title: "UPSC Economy Core Lectures", channel: "Mrunal Patel", url: "https://www.youtube.com/playlist?list=PL2E8B9FFDA2611A8B" }
+            { title: "UPSC Economy Lectures", channel: "Mrunal Patel", url: "https://www.youtube.com/results?search_query=Mrunal+Patel+Economy+playlist" }
           ]
         }
       ]
@@ -53,21 +53,21 @@ let fallbackData = {
           name: "Physics", 
           syllabus: ["Mechanics", "Electrodynamics", "Thermodynamics", "Optics", "Modern Physics"],
           ytLectures: [
-            { title: "JEE Physics Complete Lectures", channel: "Physics Wallah", url: "https://www.youtube.com/playlist?list=PL2aPrI-C-4t-YjQnK_B_2N8C1a6g8bI2O" }
+            { title: "JEE Physics Complete Lectures", channel: "Physics Wallah", url: "https://www.youtube.com/results?search_query=Physics+Wallah+JEE+Physics+playlist" }
           ]
         },
         { 
           name: "Chemistry", 
           syllabus: ["Organic Chemistry", "Inorganic Chemistry", "Physical Chemistry", "Chemical Bonding", "Thermodynamics"],
           ytLectures: [
-            { title: "JEE Organic Chemistry Full Lectures", channel: "Mohit Tyagi", url: "https://www.youtube.com/playlist?list=PL3aPrI-C-4t8zY_QnK_B_2N8C1a6g8bI2O" }
+            { title: "JEE Organic Chemistry Lectures", channel: "Mohit Tyagi", url: "https://www.youtube.com/results?search_query=Mohit+Tyagi+JEE+Organic+Chemistry+playlist" }
           ]
         },
         { 
           name: "Mathematics", 
           syllabus: ["Calculus", "Algebra", "Coordinate Geometry", "Trigonometry", "Vectors & 3D Geometry"],
           ytLectures: [
-            { title: "JEE Mathematics Playlist", channel: "Sameer Chincholikar", url: "https://www.youtube.com/playlist?list=PL2aPrI-C-4t9zN6y8_C_2N8C1a6g8bI2O" }
+            { title: "JEE Mathematics Lectures", channel: "Sameer Chincholikar", url: "https://www.youtube.com/results?search_query=JEE+Mathematics+Sameer+Chincholikar+playlist" }
           ]
         }
       ]
@@ -79,21 +79,21 @@ let fallbackData = {
           name: "Biology", 
           syllabus: ["Human Physiology", "Plant Physiology", "Genetics & Evolution", "Cell Structure & Function", "Ecology"],
           ytLectures: [
-            { title: "NEET Biology NCERT Line by Line", channel: "Vipin Sharma", url: "https://www.youtube.com/playlist?list=PLwypH_tN26keM2CqNnFp3V99PypzP-8G0" }
+            { title: "NEET Biology Lectures", channel: "Vipin Sharma", url: "https://www.youtube.com/results?search_query=Vipin+Sharma+Biology+NEET+playlist" }
           ]
         },
         { 
           name: "Chemistry", 
           syllabus: ["Organic Chemistry", "Inorganic Chemistry", "Physical Chemistry", "Coordination Compounds"],
           ytLectures: [
-            { title: "NEET Chemistry Crash Course", channel: "Physics Wallah", url: "https://www.youtube.com/playlist?list=PL2aPrI-C-4t-PzP-8G0" }
+            { title: "NEET Chemistry Lectures", channel: "Physics Wallah", url: "https://www.youtube.com/results?search_query=NEET+Chemistry+Crash+Course+Physics+Wallah+playlist" }
           ]
         },
         { 
           name: "Physics", 
           syllabus: ["Mechanics", "Optics", "Electromagnetism", "Modern Physics", "Waves & Sound"],
           ytLectures: [
-            { title: "NEET Physics Crash Course Lectures", channel: "Alakh Pandey", url: "https://www.youtube.com/playlist?list=PL2aPrI-C-4t_PypzP-8G0" }
+            { title: "NEET Physics Lectures", channel: "Alakh Pandey", url: "https://www.youtube.com/results?search_query=NEET+Physics+Alakh+Pandey+playlist" }
           ]
         }
       ]
@@ -105,21 +105,21 @@ let fallbackData = {
           name: "Physics", 
           syllabus: ["Electrostatics", "Current Electricity", "Magnetic Effects of Current", "Electromagnetic Induction", "Optics", "Dual Nature of Matter"],
           ytLectures: [
-            { title: "Class 12 Boards Physics Playlist", channel: "Radhika Classes", url: "https://www.youtube.com/playlist?list=PLwypH_tN26kfU8Hl73L2P-8G0" }
+            { title: "Class 12 Boards Physics Playlist", channel: "Radhika Classes", url: "https://www.youtube.com/results?search_query=Radhika+Classes+Class+12+Physics+playlist" }
           ]
         },
         { 
           name: "Chemistry", 
           syllabus: ["Solutions", "Electrochemistry", "Chemical Kinetics", "d and f Block Elements", "Coordination Compounds", "Haloalkanes and Haloarenes"],
           ytLectures: [
-            { title: "Class 12 Boards Chemistry Full Series", channel: "Bharat Panchal", url: "https://www.youtube.com/playlist?list=PL2aPrI-C-4t9PzP-8G0" }
+            { title: "Class 12 Boards Chemistry Series", channel: "Bharat Panchal", url: "https://www.youtube.com/results?search_query=Bharat+Panchal+Class+12+Chemistry+playlist" }
           ]
         },
         { 
           name: "Mathematics", 
           syllabus: ["Relations and Functions", "Algebra", "Calculus", "Vectors and Three-Dimensional Geometry", "Probability"],
           ytLectures: [
-            { title: "Class 12 Board Maths Lectures", channel: "Neha Agrawal Mathematically Inclined", url: "https://www.youtube.com/playlist?list=PL2aPrI-C-4t8PypzP-8G0" }
+            { title: "Class 12 Board Maths Lectures", channel: "Neha Agrawal Mathematically Inclined", url: "https://www.youtube.com/results?search_query=Neha+Agrawal+Class+12+Maths+playlist" }
           ]
         }
       ]
@@ -131,16 +131,16 @@ let fallbackData = {
           name: "Database Management (DBMS)", 
           syllabus: ["ER Model", "Relational Algebra", "SQL Queries & Joins", "Normalization (1NF-BCNF)", "Transactions & Concurrency"],
           ytLectures: [
-            { title: "DBMS Full Playlist for Exams", channel: "Gate Smashers", url: "https://www.youtube.com/playlist?list=PLxCzCOWd7aiFAN6I81HJCgGPFA6RDy8WY" },
-            { title: "DBMS Lectures for Beginners", channel: "Neso Academy", url: "https://www.youtube.com/playlist?list=PLBlnK6fEyqRi_Z7c_W1S8D7cshPzF92m5" }
+            { title: "DBMS Full Playlist for Exams", channel: "Gate Smashers", url: "https://www.youtube.com/playlist?list=PLxCzCOWd7aiFAN6I8CuViBuCdJgiOkT2Y" },
+            { title: "DBMS Lectures for Beginners", channel: "Neso Academy", url: "https://www.youtube.com/results?search_query=Neso+Academy+DBMS+playlist" }
           ]
         },
         { 
           name: "Data Structures", 
           syllabus: ["Arrays & Linked Lists", "Stacks & Queues", "Trees & Binary Search Trees", "Graphs & Traversals (DFS/BFS)", "Sorting & Searching"],
           ytLectures: [
-            { title: "Data Structures Full Playlist", channel: "Gate Smashers", url: "https://www.youtube.com/playlist?list=PLxCzCOWd7aiEwaAHN1w14upWZ753e_UaH" },
-            { title: "Data Structures and Algorithms in C", channel: "Neso Academy", url: "https://www.youtube.com/playlist?list=PLBlnK6fEyqRj9lld8sWIUNwlKzUu21YZ9" }
+            { title: "Data Structures Full Playlist", channel: "Gate Smashers", url: "https://www.youtube.com/playlist?list=PLxCzCOWd7aiEwaANNt3OqJPVIxwp2ebiT" },
+            { title: "Data Structures and Algorithms", channel: "Neso Academy", url: "https://www.youtube.com/results?search_query=Neso+Academy+Data+Structures+playlist" }
           ]
         }
       ]
@@ -152,15 +152,15 @@ let fallbackData = {
           name: "Quantitative Aptitude", 
           syllabus: ["Ratio & Proportion", "Percentage & Profit-Loss", "Simple & Compound Interest", "Time, Speed & Distance", "Algebra & Geometry"],
           ytLectures: [
-            { title: "SSC CGL Maths Complete Lectures", channel: "Abhinay Maths", url: "https://www.youtube.com/playlist?list=PL2aPrI-C-4t8zN6y8_C_2N8" },
-            { title: "SSC Math Foundation Course", channel: "Gagan Pratap Maths", url: "https://www.youtube.com/playlist?list=PLBlnK6fEyqRj9lld8sW" }
+            { title: "SSC CGL Maths Complete Lectures", channel: "Abhinay Maths", url: "https://www.youtube.com/results?search_query=Abhinay+Maths+SSC+CGL+playlist" },
+            { title: "SSC Math Foundation Course", channel: "Gagan Pratap Maths", url: "https://www.youtube.com/results?search_query=Gagan+Pratap+Maths+SSC+CGL+playlist" }
           ]
         },
         { 
           name: "General Awareness", 
           syllabus: ["Indian History", "Indian Geography & Economy", "General Science", "Constitution of India"],
           ytLectures: [
-            { title: "General Studies Complete Playlist", channel: "Parmar SSC", url: "https://www.youtube.com/playlist?list=PLxCzCOWd7aiFAN6I81HJCg" }
+            { title: "General Studies Complete Playlist", channel: "Parmar SSC", url: "https://www.youtube.com/results?search_query=Parmar+SSC+General+Studies+playlist" }
           ]
         }
       ]
@@ -172,14 +172,14 @@ let fallbackData = {
           name: "General Test", 
           syllabus: ["Numerical Ability", "Logical Reasoning", "Analytical Reasoning", "General Knowledge"],
           ytLectures: [
-            { title: "CUET General Test Preparation", channel: "CUET Adda247", url: "https://www.youtube.com/playlist?list=PL2aPrI-C-4t-YjQnK" }
+            { title: "CUET General Test Preparation", channel: "CUET Adda247", url: "https://www.youtube.com/results?search_query=CUET+General+Test+preparation+playlist" }
           ]
         },
         { 
           name: "English Language", 
           syllabus: ["Reading Comprehension", "Synonyms & Antonyms", "Idioms and Phrases", "Sentence Correction"],
           ytLectures: [
-            { title: "CUET English Language Classes", channel: "Shipra Mishra", url: "https://www.youtube.com/playlist?list=PL3vOUzG_54Ff3K8L5u" }
+            { title: "CUET English Language Classes", channel: "Shipra Mishra", url: "https://www.youtube.com/results?search_query=CUET+English+Shipra+Mishra+playlist" }
           ]
         }
       ]
@@ -191,15 +191,15 @@ let fallbackData = {
           name: "Mathematics", 
           syllabus: ["Algebra & Matrices", "Trigonometry", "Analytical Geometry", "Differential Calculus & Vectors", "Probability & Statistics"],
           ytLectures: [
-            { title: "NDA Mathematics Lectures", channel: "SSB Guide (Arpit Choudhary)", url: "https://www.youtube.com/playlist?list=PL2aPrI-C-4t_PypzP-8G0" },
-            { title: "NDA Maths Full Course", channel: "Learn With Sumit", url: "https://www.youtube.com/playlist?list=PLxCzCOWd7aiFAN6" }
+            { title: "NDA Mathematics Lectures", channel: "SSB Guide (Arpit Choudhary)", url: "https://www.youtube.com/results?search_query=NDA+Mathematics+Arpit+Choudhary+playlist" },
+            { title: "NDA Maths Full Course", channel: "Learn With Sumit", url: "https://www.youtube.com/results?search_query=NDA+Maths+Learn+With+Sumit+playlist" }
           ]
         },
         { 
           name: "General Ability Test (GAT)", 
           syllabus: ["English Grammar & Vocabulary", "Physics & Chemistry Basics", "General Science & History", "Geography & Current Events"],
           ytLectures: [
-            { title: "NDA GAT Complete Prep Series", channel: "Learn With Sumit", url: "https://www.youtube.com/playlist?list=PL3vOUzG_54Ff3" }
+            { title: "NDA GAT Complete Prep Series", channel: "Learn With Sumit", url: "https://www.youtube.com/results?search_query=NDA+GAT+Learn+With+Sumit+playlist" }
           ]
         }
       ]
@@ -612,13 +612,17 @@ export async function connectDB(mongoUri) {
     AnalysisReportModel = mongoose.model('AnalysisReport', analysisReportSchema);
     CommunityPostModel = mongoose.model('CommunityPost', communityPostSchema);
 
-    // Seed database if empty
+    // Seed database if empty or refresh exams list to apply working YT playlists
     const count = await ExamModel.countDocuments();
     if (count === 0) {
       console.log("Seeding MongoDB with default exams and PYQs...");
       await ExamModel.insertMany(fallbackData.exams);
       await PyqModel.insertMany(fallbackData.pyqs);
       await CommunityPostModel.insertMany(fallbackData.communityPosts);
+    } else {
+      console.log("Refreshing MongoDB default exams and lectures list...");
+      await ExamModel.deleteMany({});
+      await ExamModel.insertMany(fallbackData.exams);
     }
 
     db = {
