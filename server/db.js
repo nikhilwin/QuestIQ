@@ -364,16 +364,23 @@ let fallbackData = {
 // Initialize fallback JSON file if it doesn't exist
 const initFallbackDB = () => {
   if (!fs.existsSync(FALLBACK_FILE)) {
-    fs.writeFileSync(FALLBACK_FILE, JSON.stringify(fallbackData, null, 2));
+    try {
+      fs.writeFileSync(FALLBACK_FILE, JSON.stringify(fallbackData, null, 2));
+    } catch (e) {
+      console.warn("⚠️ Read-only filesystem detected. Running fallback DB in-memory.");
+    }
   } else {
     try {
       const data = fs.readFileSync(FALLBACK_FILE, 'utf8');
       const parsed = JSON.parse(data);
-      // Merge keys to ensure 'users' exists in reading older fallbacks
       fallbackData = { ...fallbackData, ...parsed };
     } catch (e) {
-      console.error("Error reading fallback DB, resetting to defaults...", e);
-      fs.writeFileSync(FALLBACK_FILE, JSON.stringify(fallbackData, null, 2));
+      console.error("Error reading fallback DB:", e);
+      try {
+        fs.writeFileSync(FALLBACK_FILE, JSON.stringify(fallbackData, null, 2));
+      } catch (writeErr) {
+        // fail silently on read-only filesystem
+      }
     }
   }
 };
@@ -382,7 +389,7 @@ const saveFallbackDB = () => {
   try {
     fs.writeFileSync(FALLBACK_FILE, JSON.stringify(fallbackData, null, 2));
   } catch (e) {
-    console.error("Failed to save fallback DB", e);
+    console.warn("Failed to write to fallback DB (this is normal on read-only hosts like Vercel):", e.message);
   }
 };
 
