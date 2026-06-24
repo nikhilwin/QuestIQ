@@ -1,0 +1,15 @@
+{
+  "name": "questiq-monorepo",
+  "version": "1.0.0",
+  "description": "QuestIQ AI-Powered Exam Prep & PYQ Intelligence Platform",
+  "main": "server/server.js",
+  "scripts": {
+    "install-all": "npm.cmd install && npm.cmd install --prefix server && npm.cmd install --prefix client",
+    "server": "npm.cmd run dev --prefix server",
+    "client": "npm.cmd run dev --prefix client",
+    "dev": "concurrently \"npm.cmd run server\" \"npm.cmd run client\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
