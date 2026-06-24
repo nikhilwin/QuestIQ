@@ -630,7 +630,7 @@ export async function connectDB(mongoUri) {
     };
     useFallback = false;
   } catch (err) {
-    console.error("❌ MongoDB connection failed. Falling back to Local JSON Database.");
+    console.error("❌ MongoDB connection failed. Falling back to Local JSON Database.", err);
     useFallback = true;
     db = fallbackModels;
   }

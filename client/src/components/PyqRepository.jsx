@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Search, Filter, Calendar, BookOpen, CheckCircle2, AlertCircle, PlusCircle, HelpCircle, Star } from 'lucide-react';
 
-export default function PyqRepository({ selectedExam, selectedSubject, currentUser, onLoginRequired }) {
+export default function PyqRepository({ selectedExam, selectedSubject, currentUser, onLoginRequired, preloadedTopic }) {
   const [pyqs, setPyqs] = useState([]);
   const [loading, setLoading] = useState(true);
   
@@ -12,6 +12,12 @@ export default function PyqRepository({ selectedExam, selectedSubject, currentUs
   const [filterTopic, setFilterTopic] = useState('');
   const [filterExam, setFilterExam] = useState(selectedExam ? selectedExam.name : '');
   const [filterSubject, setFilterSubject] = useState(selectedSubject ? selectedSubject.name : '');
+
+  useEffect(() => {
+    if (preloadedTopic) {
+      setFilterTopic(preloadedTopic);
+    }
+  }, [preloadedTopic]);
   
   // Bookmark state
   const [showBookmarksOnly, setShowBookmarksOnly] = useState(false);

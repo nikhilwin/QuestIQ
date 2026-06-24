@@ -308,6 +308,8 @@ export default function App() {
               onSelectSubject={handleSelectSubject}
               selectedExam={selectedExam}
               selectedSubject={selectedSubject}
+              onSendToAiAssistant={handleSendToAiAssistant}
+              onNavigate={setActiveTab}
             />
           )}
 
@@ -317,6 +319,7 @@ export default function App() {
               selectedSubject={selectedSubject}
               currentUser={currentUser}
               onLoginRequired={() => setIsLoginOpen(true)}
+              preloadedTopic={aiFocusTopic}
             />
           )}
 

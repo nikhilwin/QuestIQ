@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { BookOpen, GraduationCap, ChevronRight, Award, Compass, ArrowRight, Video } from 'lucide-react';
+import { BookOpen, GraduationCap, ChevronRight, Award, Compass, ArrowRight, Video, Brain, Search, BarChart2, Calendar, X, Sparkles } from 'lucide-react';
 
-export default function Dashboard({ onSelectExam, onSelectSubject, selectedExam, selectedSubject }) {
+export default function Dashboard({ onSelectExam, onSelectSubject, selectedExam, selectedSubject, onSendToAiAssistant, onNavigate }) {
   const [exams, setExams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedTopic, setSelectedTopic] = useState(null);
 
   useEffect(() => {
     fetchExams();
@@ -167,20 +168,21 @@ export default function Dashboard({ onSelectExam, onSelectSubject, selectedExam,
 
                   <div className="space-y-3">
                     {selectedSubject.syllabus.map((topic, idx) => (
-                      <div 
+                      <button 
                         key={topic}
-                        className="flex items-center justify-between p-4 bg-slate-900/40 border border-slate-800/80 rounded-xl hover:border-slate-700/60 transition-colors"
+                        onClick={() => setSelectedTopic(topic)}
+                        className="w-full flex items-center justify-between p-4 bg-slate-900/40 border border-slate-800/80 rounded-xl hover:border-violet-500/40 hover:bg-violet-950/5 transition-all text-left cursor-pointer group"
                       >
                         <div className="flex items-center space-x-3">
-                          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-slate-800 text-xs font-semibold text-slate-400">
+                          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-slate-800 text-xs font-semibold text-slate-400 group-hover:bg-violet-600/20 group-hover:text-violet-300 transition-colors">
                             {idx + 1}
                           </span>
-                          <span className="text-sm font-medium text-slate-200">{topic}</span>
+                          <span className="text-sm font-medium text-slate-200 group-hover:text-violet-200 transition-colors">{topic}</span>
                         </div>
-                        <span className="px-2 py-1 bg-violet-600/10 text-violet-400 rounded-md text-[10px] uppercase font-bold border border-violet-500/10">
-                          Syllabus Topic
+                        <span className="px-2 py-1 bg-violet-600/10 text-violet-400 rounded-md text-[10px] uppercase font-bold border border-violet-500/10 group-hover:bg-violet-600 group-hover:text-white transition-all">
+                          Explore Topic
                         </span>
-                      </div>
+                      </button>
                     ))}
                   </div>
 
@@ -227,6 +229,94 @@ export default function Dashboard({ onSelectExam, onSelectSubject, selectedExam,
                   </p>
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Topic Action Explorer Modal */}
+      {selectedTopic && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 backdrop-blur-md p-4 animate-fade-in">
+          <div className="relative w-full max-w-lg bg-[#0b0f19] border border-slate-800 rounded-3xl p-6 md:p-8 space-y-6 shadow-2xl shadow-violet-950/10 transform scale-100 transition-all duration-300">
+            {/* Background ambient glow */}
+            <div className="absolute -left-10 -top-10 w-40 h-40 bg-violet-600/15 rounded-full blur-2xl pointer-events-none"></div>
+            
+            {/* Header */}
+            <div className="flex items-start justify-between relative z-10">
+              <div className="space-y-1">
+                <span className="text-[10px] font-bold text-violet-400 uppercase tracking-widest block">
+                  {selectedSubject?.name} • Topic Explorer
+                </span>
+                <h3 className="text-xl font-extrabold text-white leading-tight">
+                  {selectedTopic}
+                </h3>
+              </div>
+              <button 
+                onClick={() => setSelectedTopic(null)}
+                className="p-1.5 bg-slate-900 border border-slate-800 text-slate-400 hover:text-white rounded-xl hover:bg-slate-800 transition-all cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <p className="text-xs text-slate-400 leading-relaxed relative z-10">
+              Select an action below to analyze weightage, practice historical questions, or consult the AI Study Tutor for revision notes.
+            </p>
+
+            {/* Actions Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
+              {/* Option 1: AI Explanation */}
+              <button
+                onClick={() => {
+                  onSendToAiAssistant(selectedTopic);
+                  setSelectedTopic(null);
+                }}
+                className="flex flex-col p-4 bg-violet-950/10 border border-violet-500/25 hover:border-violet-500 hover:bg-violet-950/20 text-left rounded-2xl group transition-all duration-300 cursor-pointer shadow-md shadow-violet-950/10"
+              >
+                <Brain className="w-6 h-6 text-violet-400 group-hover:scale-110 transition-transform mb-3" />
+                <span className="text-sm font-bold text-violet-200">AI Study Tutor</span>
+                <span className="text-[10px] text-slate-500 mt-1">Get notes & summaries</span>
+              </button>
+
+              {/* Option 2: Solve PYQs */}
+              <button
+                onClick={() => {
+                  onSendToAiAssistant(selectedTopic); // Pre-sets the topic
+                  onNavigate('pyq-hub');
+                  setSelectedTopic(null);
+                }}
+                className="flex flex-col p-4 bg-slate-900/40 border border-slate-800 hover:border-violet-500/40 hover:bg-violet-950/10 text-left rounded-2xl group transition-all duration-300 cursor-pointer"
+              >
+                <Search className="w-6 h-6 text-cyan-400 group-hover:scale-110 transition-transform mb-3" />
+                <span className="text-sm font-bold text-slate-200 group-hover:text-violet-300">Practice PYQs</span>
+                <span className="text-[10px] text-slate-500 mt-1">Solve exam questions</span>
+              </button>
+
+              {/* Option 3: Weightage Analysis */}
+              <button
+                onClick={() => {
+                  onNavigate('analyzer');
+                  setSelectedTopic(null);
+                }}
+                className="flex flex-col p-4 bg-slate-900/40 border border-slate-800 hover:border-violet-500/40 hover:bg-violet-950/10 text-left rounded-2xl group transition-all duration-300 cursor-pointer"
+              >
+                <BarChart2 className="w-6 h-6 text-emerald-400 group-hover:scale-110 transition-transform mb-3" />
+                <span className="text-sm font-bold text-slate-200 group-hover:text-violet-300">Weightage Chart</span>
+                <span className="text-[10px] text-slate-500 mt-1">Check repeat frequency</span>
+              </button>
+
+              {/* Option 4: Smart Planner */}
+              <button
+                onClick={() => {
+                  onNavigate('revision');
+                  setSelectedTopic(null);
+                }}
+                className="flex flex-col p-4 bg-slate-900/40 border border-slate-800 hover:border-violet-500/40 hover:bg-violet-950/10 text-left rounded-2xl group transition-all duration-300 cursor-pointer"
+              >
+                <Calendar className="w-6 h-6 text-pink-400 group-hover:scale-110 transition-transform mb-3" />
+                <span className="text-sm font-bold text-slate-200 group-hover:text-violet-300">7-Day Planner</span>
+                <span className="text-[10px] text-slate-500 mt-1">Add to revision task</span>
+              </button>
             </div>
           </div>
         </div>
